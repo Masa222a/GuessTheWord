@@ -63,14 +63,13 @@ class GameFragment : Fragment() {
             binding.wordText.text = newWord
         })
 
+        binding.gameViewModel = viewModel
+
         // observer for the Game finished event
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished) gameFinished()
         })
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
         return binding.root
 
     }
@@ -78,14 +77,10 @@ class GameFragment : Fragment() {
     /** Methods for buttons presses **/
     private fun onSkip() {
         viewModel.onSkip()
-        updateWordText()
-        updateScoreText()
     }
 
     private fun onCorrect() {
         viewModel.onCorrect()
-        updateScoreText()
-        updateWordText()
     }
 
     private fun onEndGame() {
