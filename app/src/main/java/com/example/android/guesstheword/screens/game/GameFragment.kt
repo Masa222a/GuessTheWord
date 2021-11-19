@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
 
@@ -62,17 +63,19 @@ class GameFragment : Fragment() {
             binding.wordText.text = newWord
         })
 
+        // observer for the Game finished event
+        viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
+            if (hasFinished) gameFinished()
+        })
+
         binding.correctButton.setOnClickListener { onCorrect() }
         binding.skipButton.setOnClickListener { onSkip() }
         binding.endGameButton.setOnClickListener { onEndGame() }
-        updateScoreText()
-        updateWordText()
         return binding.root
 
     }
 
     /** Methods for buttons presses **/
-
     private fun onSkip() {
         viewModel.onSkip()
         updateWordText()
@@ -105,6 +108,7 @@ class GameFragment : Fragment() {
         Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
         val action = GameFragmentDirections.actionGameToScore()
         action.score = viewModel.score.value?:0
-        NavHostFragment.findNavController(this).navigate(action)
+        findNavController(this).navigate(action)
+        viewModel.onGameFinishComplete()
     }
 }
