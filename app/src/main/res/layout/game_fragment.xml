@@ -67,6 +67,21 @@
             tools:text="&quot;Tuna&quot;" />
 
         <TextView
+            android:id="@+id/word_hint_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@{gameViewModel.wordHint}"
+            android:textColor="@color/black_text_color"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/timer_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/word_text"
+            tools:text="Current word has 6 letters \nThe letter at position 4 is N" />
+
+        <TextView
             android:id="@+id/timer_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
